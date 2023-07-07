@@ -1,0 +1,36 @@
+---
+- name: Install required system packages
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - python3-pip
+      - virtualenv
+      - python3-setuptools
+    state: latest
+    update_cache: true
+
+- name: Install Docker Module for Python
+  pip:
+    name: docker
+
+- name: Docker login 
+  community.docker.docker_login:
+    username: "{{ username }}"
+    password: "{{ password }}"
+
+- name: Copy file with owner and permissions
+  copy:
+    src: ../../app
+    dest: .
+
+- name: Build an image and push
+  community.docker.docker_image:
+    build:
+      path: ./app/
+    name: suraj9741/koko
+    tag: v1
+    push: true
+    source: build

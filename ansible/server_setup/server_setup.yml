@@ -1,0 +1,11 @@
+# An Ansible playbook to deploy the Perfios scripts project
+
+- name: configure servre with install docker
+  hosts: all
+  become: true
+  become_method: sudo
+  gather_facts: true
+  tags:
+    - deploy
+  roles:
+    - role: install_docker
