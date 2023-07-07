@@ -15,7 +15,7 @@ app = create_app()
 @app.route('/')
 def index():
     """ index route """
-    return "Hello Koko!"
+    return "Hello Koko k8s deployment!"
 
 
 @app.route('/timeout')
