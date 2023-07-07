@@ -8,4 +8,4 @@
   tags:
     - deploy
   roles:
-    - role: install_docker
+    - role: docker_build
