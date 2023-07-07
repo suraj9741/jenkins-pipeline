@@ -31,6 +31,6 @@
     build:
       path: ./app/
     name: suraj9741/koko
-    tag: v1
+    tag: "{{ tag }}"
     push: true
     source: build
