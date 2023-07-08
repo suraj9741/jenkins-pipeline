@@ -1,0 +1,31 @@
+pipeline{
+    agent any
+    stages{
+        stage('Pull Application build code'){
+            steps{
+                git branch: 'main', url: 'https://github.com/suraj9741/jenkins-pipeline.git'
+            }
+        }
+        stage('Build and Push Application Image'){
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerPassword', usernameVariable: 'dockerUser')]) {
+                    ansiblePlaybook become: true, colorized: true, credentialsId: 'private-key', disableHostKeyChecking: true, extras: '--extra-vars "username=${dockerUser} password=${dockerPassword}"  --extra-vars "tag=$BUILD_NUMBER"', installation: 'ansible', inventory: 'ansible/server_setup/hosts', playbook: 'ansible/server_setup/build_push.yml'
+                }
+
+            }
+        }
+        stage('Pull K8s HELM repo') {
+            steps {
+                git branch: 'main', url: 'https://github.com/suraj9741/kube-deploy.git'
+            }
+        }
+        stage('Deploy K8s Application'){
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerPassword', usernameVariable: 'dockerUser')]) {
+                    ansiblePlaybook become: true, colorized: true, credentialsId: 'private-key', disableHostKeyChecking: true, extras: '--extra-vars "username=${dockerUser} password=${dockerPassword}"  --extra-vars "tag=$BUILD_NUMBER"', installation: 'ansible', inventory: 'ansible/update_manifestfile/hosts', playbook: 'ansible/update_manifestfile/deploy.yml'
+                }
+
+            }
+        }
+    }
+}
