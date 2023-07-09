@@ -2,7 +2,7 @@ from time import sleep
 
 from flask import Flask
 
-WECOME_TEXT="Hello variable check k8s deployment!"
+WELCOME_TEXT="Hello variable check k8s deployment!"
 
 def create_app() -> Flask:
     """ create basic flask app"""
@@ -16,7 +16,7 @@ app = create_app()
 @app.route('/')
 def index():
     """ index route """
-    return "Hello variable check k8s deployment!"
+    return WELCOME_TEXT
 
 
 @app.route('/timeout')
