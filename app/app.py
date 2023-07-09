@@ -2,7 +2,7 @@ from time import sleep
 
 from flask import Flask
 
-WECOME_TEXT='Hello variable check k8s deployment!'
+WECOME_TEXT="Hello variable check k8s deployment!"
 
 def create_app() -> Flask:
     """ create basic flask app"""
