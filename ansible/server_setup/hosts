@@ -1,1 +1,1 @@
-mongo_test  ansible_host=65.0.45.186 ansible_ssh_port=22
+mongo_test  ansible_host=15.206.198.240 ansible_ssh_port=22
